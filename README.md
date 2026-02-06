@@ -83,25 +83,25 @@ In this part of the project, you will work with a synthetic firewall log dataset
 Profile the raw firewall log file to understand its structure, data quality signals, and initial issues **before** any cleaning.
 
 1. **Load (initial inspection)**
-   - Load the CSV into a DataFrame, confirm the file contains **11 columns** with the expected **column names** (order as listed above).
+- Load the CSV into a DataFrame, confirm the file contains **11 columns** with the expected **column names** (order as listed above).
 
-2. **Report shape**
+3. **Report shape**
    - Display the **number of rows** and **columns** (rows × columns).
    - Note that a small number of **duplicate rows** are present by design.
 
-3. **Inspect structure and examples**
+4. **Inspect structure and examples**
    - Show a **random sample of 10 rows**.
    - Ensure examples visibly demonstrate formatting drift (e.g., two timestamp formats, casing differences, commas, blanks).
 
-4. **List raw data types**
+5. **List raw data types**
    - Display the **current dtypes** (expected to be string/object at this stage).
 
-5. **Profile missingness (raw view)**
+6. **Profile missingness (raw view)**
    - Treat **empty strings** and **whitespace-only strings** as missing **for profiling purposes only**.
    - Report **missing-value counts per column** in **descending** order.
    - Do **not** impute, drop, or transform values in this section.
 
-6. **Light diagnostic signals (counts only; no cleaning yet)**
+7. **Light diagnostic signals (counts only; no cleaning yet)**
    - **Timestamps:** counts for each of the two expected formats  
      (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`), plus **blank count**.
    - **Ports:** counts with **commas** and **blank values** for `src_port` and `dst_port`.
@@ -110,7 +110,7 @@ Profile the raw firewall log file to understand its structure, data quality sign
    - **Country / Device:** counts of **lowercase country codes**, **blank country values**, and **device values needing trimming** (leading/trailing spaces).
    - **Duplicates:** count of **full-row duplicates** (do not drop yet).
 
-7. **Section 1 — Deliverables**
+8. **Section 1 — Deliverables**
    - **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
    - **Screenshot 2:** **random sample(10)** demonstrating raw variety.
    - **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
