@@ -205,53 +205,37 @@ A short written summary (2 pages) that includes:
 
 ## Rubric (15% Total)
 
-### Part A — DataCamp (5%)
-| Criteria | Points |
-|---------|--------|
-| Screenshot showing completion of **Chapter 1: Common Data Problems** (name + timestamp visible) | **5.0** |
+### **Part A — DataCamp (5%)**
+- Screenshot showing completion of **Chapter 1: Common Data Problems** (name + timestamp visible)
 
----
+### **Part B — Firewall Log Cleaning (10%)**
+- 1. Identifying Data Issues — **2.0 pts**
+  - Correctly identifies **at least 8** issues in the dataset  
+  - Issues align with the light messiness (timestamps, IPs, ports, casing drift, bytes formatting, duplicates, etc.)
 
-### Part B — Firewall Log Cleaning (10%)
+- 2. Cleaning & Standardization — **4.0 pts**
+  - screenshots included in the report  
+    - Parsed timestamps  
+    - IP validation  
+    - Port correction  
+    - Protocol/action normalization  
+    - Byte conversions  
+    - Country/device cleanup  
+    - Duplicate removal  
 
-#### 1. Identifying Data Issues — **2.0 pts**
-- Correctly identifies **at least 8** issues in the dataset  
-- Issues align with the light messiness (timestamps, IPs, ports, casing drift, bytes formatting, duplicates, etc.)
+- 3. Validation Checks — **1.5 pts**
+  - At least **3 meaningful checks**, such as:
+    - Valid range for ports  
+    - Valid protocol/action categories  
+    - No negative or non‑numeric bytes  
+    - No future timestamps  
+    - Duplicates removed  
 
-#### 2. Cleaning & Standardization — **4.0 pts**
-Assessed based on correctness and clarity of the cleaning steps, whether shown in:
-- a Jupyter Notebook **or**
-- screenshots included in the report  
+- 4. Visualization — **1.0 pt**
+  - One simple, correct plot (e.g., top IPs, allow vs deny, common ports)  
+  - Must be generated *after* cleaning  
 
-Includes:
-- Parsed timestamps  
-- IP validation  
-- Port correction  
-- Protocol/action normalization  
-- Byte conversions  
-- Country/device cleanup  
-- Duplicate removal  
-
-Full points require all major fields cleaned appropriately.
-
-#### 3. Validation Checks — **1.5 pts**
-- At least **3 meaningful checks**, such as:
-  - Valid range for ports  
-  - Valid protocol/action categories  
-  - No negative or non‑numeric bytes  
-  - No future timestamps  
-  - Duplicates removed  
-
-#### 4. Visualization — **1.0 pt**
-- One simple, correct plot (e.g., top IPs, allow vs deny, common ports)  
-- Must be generated *after* cleaning  
-
-#### 5. Report Quality & Explanation — **1.5 pts**
-- Clear, concise summary (1–2 pages)  
-- Screenshots included if not submitting a notebook  
-- Explains the problems found, cleaning steps, assumptions, and validations  
-- Demonstrates understanding of the cleaning logic  
-
----
-
-### Total: **15 points**
+5. Report Quality & Explanation — **1.5 pts**
+  - Clear, concise summary (1–2 pages)  
+  - Explains the problems found, cleaning steps, assumptions, and validations  
+  - Demonstrates understanding of the cleaning logic  
