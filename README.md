@@ -239,3 +239,13 @@ A short written summary (2 pages) that includes:
   - Clear, concise summary (1–2 pages)  
   - Explains the problems found, cleaning steps, assumptions, and validations  
   - Demonstrates understanding of the cleaning logic  
+
+----
+
+
+### Academic Integrity
+- The work you submit must be your own.
+- You may discuss ideas with classmates, but you must write your own code and explanations.
+- All screenshots must show the current date time, usnique username
+- Submissions may be checked for similarity.
+
