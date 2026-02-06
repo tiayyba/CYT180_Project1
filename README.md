@@ -178,7 +178,6 @@ Transform the raw firewall log into a consistent, analysis‑ready dataset by ap
 1. Strip whitespace.
 2. Validate IPv4 format: four dot‑separated octets; each octet is an integer **0–255**.
 3. Replace invalid values (including placeholders like `-`) with **`NaN`**.
-4. Leave private ranges (e.g., `10.x.x.x`, `192.168.x.x`, `172.16–31.x.x`) as they are—these are valid.
 
 ---
 
@@ -256,48 +255,6 @@ Transform the raw firewall log into a consistent, analysis‑ready dataset by ap
 **Rules**
 1. Identify **full‑row duplicates** (all columns identical).
 
-
-### 3. Clean & Standardize the Data
-
-#### **event_time**
-- Parse all timestamp formats  
-- Convert to a standard datetime format (UTC not required, consistency is required)  
-- Handle blanks or impossible future dates  
-
-### **src_ip / dst_ip**
-- Validate IPv4 format  
-- Replace invalid IPs (e.g., out-of-range octets) with NaN
-  
-### **src_port / dst_port**
-- Remove commas  
-- Convert to numeric  
-- Keep only values in **0–65535**; invalid → NaN  
-
-### **protocol**
-- Normalize casing to one of: `TCP`, `UDP`, `ICMP`, `GRE`, `ESP`
-
-### **action**
-- Map small variants to:
-  - `ALLOW`
-  - `DENY`
-
-#### **bytes_in / bytes_out**
-- Remove commas  
-- Convert simple `kk` units to integers (e.g., `"5k"` → 5000 or 5\*1024; choose one method and state your choice)  
-- Convert to numeric  
-- Ensure non‑negative values
-
-#### **country**
-- Convert to uppercase  
-- Replace blanks with NaN
-    
-#### **device**
-- Trim leading/trailing spaces
-- 
-#### **duplicates**
-- Identify and drop duplicate rows  
-- State your chosen duplication rule (e.g., full-row duplicates)
-  
 ### 4. Validation Checks
 Provide **at least 3** validation steps, such as:
 - All timestamps successfully parsed  
