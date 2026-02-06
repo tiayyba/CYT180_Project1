@@ -127,13 +127,20 @@ Before cleaning the dataset, you must identify the data-quality issues that appe
    
    - **Timestamp inconsistencies** including the two different time formats and any blank or future timestamps.
       - Example: "2025-04-12 09:30" vs "12/04/2025 09:30"
-   - **Invalid IPv4 values**, such as octets outside the range 0–255 or placeholder values like `-`.
-   - **Ports with commas, blanks, or invalid ranges**, including destination ports greater than 65535.
-   - **Casing drift in `protocol` and `action`**, where the same category appears in different letter-case variations.
-   - **Bytes fields containing commas, SI `k` units, blanks, or negative values**, indicating inconsistent data entry or formatting.
-   - **Lowercase or blank country codes**, and occasional full country names.
-   - **Device identifiers with leading or trailing spaces**, indicating formatting inconsistencies.
-   - **Duplicate rows**, which should be identified before cleaning.
+   - **Invalid IPv4 values**
+      - Example: octets outside 0–255, negative numbers, or placeholder values like "-" 
+   - **Ports with formatting issues**
+      -  Example: commas ("1,234"), blanks, or out‑of‑range values like ports greater than 65535.
+   - **Casing drift in `protocol` and `action`**
+      -  Example: "tcp", "Udp", "ESP", "Allow", " deny "
+   - **Bytes fields with formatting drift**
+      -  Example: commas, "5k" units, blanks, or negative values
+   - **Country values in inconsistent formats**
+      -  Example: lowercase ("us"), blanks, or full names like "United States"
+   - **Device names with extra spaces**
+      - Example: "  FW-01 "
+   - **Duplicate rows**
+      - Full-row duplicates are intentionally included in the dataset
 
 4. **Document each issue clearly**
    - Provide **at least eight** distinct issues.  
