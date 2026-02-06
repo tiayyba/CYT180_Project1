@@ -86,32 +86,47 @@ Upload a **screenshot** that shows:
 
 Work on `raw_firewall_logs_light.csv` using Python and pandas.
 
-### 1) Load & profile
-- Read the CSV
-- Show: shape, dtypes, first 5 rows
-- Count missing values by column
+### 1. Load & profile
 
-### 2) Identify issues (find ≥ 8)
-Examples you are likely to see:
-- Mixed timestamp formats (3 formats)
-- A few **future** or **blank** timestamps
-- Invalid IPv4s (octets out of range)
-- Ports stored with commas or slightly out of range
-- `protocol` casing drift only (e.g., `tcp`, `Udp`)
-- `action` small variants (e.g., `Allow`, `DENIED`)
-- `bytes_*` with commas or simple `k` units
-- Lowercase or blank `country`
-- `device` values with leading/trailing spaces
-- ~1% duplicate rows
+- Load the CSV with pandas  
+- Display:
+  - Shape of the dataset  
+  - Column data types  
+  - First few rows  
+  - Count of missing values per column  
 
-### 3) Clean & standardize
 
-**event_time**
-- Parse the 3 formats and convert to **UTC**
-- Remove or fix future timestamps; handle blanks
+### 2. Identify Data Problems (find at least 8)
 
-**src_ip / dst_ip**
-- Validate IPv4; set invalid entries to NaN
+
+Look for issues such as:
+- Mixed timestamp formats (3 simple formats)
+- A few blank or future timestamps  
+- Invalid IPv4 addresses (octets out of range)  
+- Ports stored with commas or out of valid range  
+- `protocol` values with casing differences (`tcp`, `Udp`)  
+- `action` variations (`Allow`, `DENIED`)  
+- `bytes_in` / `bytes_out` containing commas or `k` units  
+- Lowercase or blank country codes  
+- Devices with leading/trailing spaces  
+- ~1% duplicate rows  
+
+List the issues you find in your report.
+
+
+### 3. Clean & Standardize the Data
+
+#### **event_time**
+- Parse all timestamp formats  
+- Convert to a standard datetime format (UTC not required, consistency is required)  
+- Handle blanks or impossible future dates  
+
+
+
+### **src_port / dst_port**
+- Remove commas  
+- Convert to numeric  
+- Keep only values in **0–65535**; invalid → NaN  
 
 **src_port / dst_port**
 - Convert to numeric
@@ -126,23 +141,48 @@ Examples you are likely to see:
   - `ALLOW`
   - `DENY`
 
-**bytes_in / bytes_out**
-- Remove commas
-- Convert `\"NNNk\"` to integer bytes (kB → bytes or kB → integer k; state your choice)
-- Ensure non‑negative integers; coerce invalid to NaN
+#### **bytes_in / bytes_out**
+- Remove commas  
+- Convert simple `kk` units to integers (e.g., `"5k"` → 5000 or 5\*1024; choose one method and state your choice)  
+- Convert to numeric  
+- Ensure non‑negative values
 
-**country**
-- Normalize to **uppercase 2‑letter** codes where possible
-- Leave blanks as NaN if unknown
+#### **country**
+- Convert to uppercase  
+- Replace blanks with NaN
+    
+#### **device**
+- Trim leading/trailing spaces
+- 
+#### **duplicates**
+- Identify and drop duplicate rows  
+- State your chosen duplication rule (e.g., full-row duplicates)
+  
 
-**device**
-- Trim whitespace
+----
 
-**duplicates**
-- Identify duplicates using a reasonable subsetLove it—**light** is the right call for Project 1.
+### 4. Validation Checks
+Provide **at least 3** validation steps, such as:
+- All timestamps successfully parsed  
+- No ports outside 0–65535  
+- All protocol values are in the valid set  
+- No negative or non-numeric byte values  
+- Duplicate rows removed
 
-I’ve regenerated a **lighter** firewall dataset with **3 timestamp formats**, **no IPv6**, and **reduced messiness** (~1% duplicates, minimal out‑of‑range and unit issues).
+----
 
+### 5. Simple Visualization
+Create **one** small, security‑oriented plot based on the cleaned dataset.
+
+Examples:
+- Top 10 source IPs  
+- Count of ALLOW vs DENY  
+- Most common destination ports  
+- Event count per day  
+
+Include the plot in your report.
+
+  
 **Quick snapshot from the summary:**
 - `rows`: 2000  
 - `future_times`: 16  
@@ -157,23 +197,3 @@ I’ve regenerated a **lighter** firewall dataset with **3 timestamp formats**, 
 - `duplicates_injected`: 20 (~1%)
 
 ---
-
-## Update to the GitHub‑Markdown (Part B Overview stays, but scope is lighter)
-Let’s adjust **SECTION 4** (Part B Overview) to reflect the simplified workload:
-
-```markdown
-## Part B — Firewall Log Cleaning (10%) — Light Messiness
-
-You will clean **raw_firewall_logs_light.csv** using Python and pandas.
-
-Scope is intentionally **light**:
-- **Timestamps:** 3 formats; very few future/blank values
-- **IP addresses:** only IPv4; some invalid octets (no IPv6)
-- **Ports:** a few comma-formatted strings and a few out-of-range values
-- **Protocol/Action:** casing drift and minor synonyms only
-- **Bytes:** some commas or simple `k` units (no MB/GB); no negatives
-- **Country:** some lowercase codes and occasional blanks
-- **Device:** occasional leading/trailing spaces
-- **Duplicates:** ~1% of rows
-
-Your goal: produce a **clean, analytics-ready** CSV suitable for basic security analysis (e.g., top source IPs, allow/deny patterns).
