@@ -109,17 +109,14 @@ Profile the raw firewall log file to understand its structure, data quality sign
    - **Country / Device:** counts of **lowercase country codes**, **blank country values**, and **device values needing trimming** (leading/trailing spaces).
    - **Duplicates:** count of **full-row duplicates** (do not drop yet).
 
-7. **Document assumptions (concise)**
-   - State that **no cleaning** is performed in this section.
-   - Confirm that **all columns were treated as strings** for inspection and that **empty/whitespace cells** were considered missing only for profiling.
+7. **Section 1 — Deliverables**
+   - **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
+   - **Screenshot 2:** **random sample(10)** demonstrating raw variety.
+   - **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
+   - **Screenshot 4:** **Diagnostic counts** (timestamp format tallies; ports with commas/blanks; bytes with commas/`k`/negatives/blanks; protocol/action unique counts; country lowercase/blank; device trim-needed; full-row duplicate count).
+   - A brief **2–4 sentence note** summarizing observations about the raw data (e.g., two timestamp formats, port commas, casing drift, presence of duplicates).
 
-#### Section 1 — Deliverables (include in your report)
-- **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
-- **Screenshot 2:** **random sample(10)** demonstrating raw variety.
-- **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
-- **Screenshot 4:** **Diagnostic counts** (timestamp format tallies; ports with commas/blanks; bytes with commas/`k`/negatives/blanks; protocol/action unique counts; country lowercase/blank; device trim-needed; full-row duplicate count).
-- A brief **2–4 sentence note** summarizing observations about the raw data (e.g., two timestamp formats, port commas, casing drift, presence of duplicates).
-
+----
 
 ### Part B — Section 2: Identify Data Problems
 
