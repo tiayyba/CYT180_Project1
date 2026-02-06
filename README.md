@@ -150,7 +150,10 @@ Before cleaning the dataset, you must identify the data-quality issues that appe
      - A short note explaining **why this issue matters** for data quality or analysis.
 
 5. **Deliverables (include in your report)**
-   - A **list of at least eight identified data problems**, each with a description and example(s) from your dataset.  Add this as a table in your report. 
+   - Create a table in your report (any format is fine—Markdown, Word table, or text grid) with at least eight issues, each with:
+      - Problem description
+      - Example value(s) from your dataset
+      - Why it matters
 
 ----
 
