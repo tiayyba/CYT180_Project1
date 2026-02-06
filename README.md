@@ -44,18 +44,6 @@ You will work with a synthetic but realistic firewall log dataset:
 | **device**     | Logging device identifier | Some values contain leading/trailing spaces |
 
 
-### Important Notes
-The dataset intentionally contains:
-- Mixed timestamp formats  
-- Invalid IPs  
-- Ports outside the valid range  
-- Category inconsistencies (protocol/action variations)  
-- Byte fields with units, commas, or negative values  
-- Missing values across multiple columns  
-- ~1% duplicate rows
-
-You will clean and standardize these fields in **Part B** of the project.
-
 ----
 
 ## Part A — DataCamp Preparation (5%)
@@ -84,18 +72,62 @@ Upload a **screenshot** that shows:
 
 ----
 
-## Part B — Data Cleansing
+## Part B — Firewall Log Cleaning (10%)
 
-Work on `raw_firewall_logs.csv` using Python and pandas.
+In this part of the project, you will work with a synthetic firewall log dataset that intentionally contains realistic data quality issues. Your task is to inspect, clean, and standardize the data so it can be reliably used for security analysis. You will identify inconsistencies, correct formatting problems, validate your cleaned dataset, and create one small visualization based on the final results. The focus of Part B is practical data-cleaning skills using Python and pandas.
 
-### 1. Load & profile
 
-- Load the CSV with pandas  
-- Display:
-  - Shape of the dataset  
-  - Column data types  
-  - First few rows  
-  - Count of missing values per column  
+### Task 1: Load & Profile the Dataset
+
+Profile the raw firewall log file to understand its structure, data quality signals, and initial issues **before** any cleaning.
+
+1. **Load (initial inspection)**
+   - Load the CSV into a DataFrame **without automatic type coercion** (treat all columns as raw strings for this step).
+   - Confirm the file contains **11 columns** with the expected **column names** (order as listed above).
+
+2. **Report shape**
+   - Display the **number of rows** and **columns** (rows × columns).
+   - Note that a small number of **duplicate rows** are present by design.
+
+3. **Inspect structure and examples**
+   - Show a **random sample of 5 rows**.
+   - Ensure examples visibly demonstrate formatting drift (e.g., two timestamp formats, casing differences, commas, blanks).
+
+4. **List raw data types**
+   - Display the **current dtypes** (expected to be string/object at this stage).
+   - *(Optional diagnostic)* Briefly note what pandas might infer if types were coerced (do not change types here).
+
+5. **Profile missingness (raw view)**
+   - Treat **empty strings** and **whitespace-only strings** as missing **for profiling purposes only**.
+   - Report **missing-value counts per column** in **descending** order.
+   - Do **not** impute, drop, or transform values in this section.
+
+6. **Light diagnostic signals (counts only; no cleaning yet)**
+   - **Timestamps:** counts for each of the two expected formats  
+     (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`), plus **blank count**.
+   - **Ports:** counts with **commas** and **blank values** for `src_port` and `dst_port`.
+   - **Bytes:** counts with **commas**, counts with **`k` units**, counts of **negatives** (string-level detection), and **blanks** for `bytes_in` and `bytes_out`.
+   - **Protocol / Action:** **unique raw value** counts (to reveal casing drift/variants).
+   - **Country / Device:** counts of **lowercase country codes**, **blank country values**, and **device values needing trimming** (leading/trailing spaces).
+   - **Duplicates:** count of **full-row duplicates** (do not drop yet).
+
+7. **Document assumptions (concise)**
+   - State that **no cleaning** is performed in this section.
+   - Confirm that **all columns were treated as strings** for inspection and that **empty/whitespace cells** were considered missing only for profiling.
+
+### Deliverables (include in your report)
+- **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
+- **Screenshot 2:** **Head(5)** and **random sample(5)** demonstrating raw variety.
+- **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
+- **Screenshot 4:** **Diagnostic counts** (timestamp format tallies; ports with commas/blanks; bytes with commas/`k`/negatives/blanks; protocol/action unique counts; country lowercase/blank; device trim-needed; full-row duplicate count).
+- A brief **2–4 sentence note** summarizing observations about the raw data (e.g., two timestamp formats, port commas, casing drift, presence of duplicates).
+
+### Constraints
+- Do **not** clean, transform, replace, or drop any values in this section.
+- Do **not** convert data types (keep raw strings) beyond what’s required to produce counts.
+
+
+
 
 
 ### 2. Identify Data Problems (find at least 8)
