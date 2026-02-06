@@ -77,25 +77,23 @@ Upload a **screenshot** that shows:
 In this part of the project, you will work with a synthetic firewall log dataset that intentionally contains realistic data quality issues. Your task is to inspect, clean, and standardize the data so it can be reliably used for security analysis. You will identify inconsistencies, correct formatting problems, validate your cleaned dataset, and create one small visualization based on the final results. The focus of Part B is practical data-cleaning skills using Python and pandas.
 
 
-### Task 1: Load & Profile the Dataset
+### Part B — Section 1: Load & Profile the Dataset
 
 Profile the raw firewall log file to understand its structure, data quality signals, and initial issues **before** any cleaning.
 
 1. **Load (initial inspection)**
-   - Load the CSV into a DataFrame **without automatic type coercion** (treat all columns as raw strings for this step).
-   - Confirm the file contains **11 columns** with the expected **column names** (order as listed above).
+   - Load the CSV into a DataFrame, confirm the file contains **11 columns** with the expected **column names** (order as listed above).
 
 2. **Report shape**
    - Display the **number of rows** and **columns** (rows × columns).
    - Note that a small number of **duplicate rows** are present by design.
 
 3. **Inspect structure and examples**
-   - Show a **random sample of 5 rows**.
+   - Show a **random sample of 10 rows**.
    - Ensure examples visibly demonstrate formatting drift (e.g., two timestamp formats, casing differences, commas, blanks).
 
 4. **List raw data types**
    - Display the **current dtypes** (expected to be string/object at this stage).
-   - *(Optional diagnostic)* Briefly note what pandas might infer if types were coerced (do not change types here).
 
 5. **Profile missingness (raw view)**
    - Treat **empty strings** and **whitespace-only strings** as missing **for profiling purposes only**.
@@ -115,37 +113,159 @@ Profile the raw firewall log file to understand its structure, data quality sign
    - State that **no cleaning** is performed in this section.
    - Confirm that **all columns were treated as strings** for inspection and that **empty/whitespace cells** were considered missing only for profiling.
 
-### Deliverables (include in your report)
+#### Task1 — Deliverables (include in your report)
 - **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
-- **Screenshot 2:** **Head(5)** and **random sample(5)** demonstrating raw variety.
+- **Screenshot 2:** **random sample(10)** demonstrating raw variety.
 - **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
 - **Screenshot 4:** **Diagnostic counts** (timestamp format tallies; ports with commas/blanks; bytes with commas/`k`/negatives/blanks; protocol/action unique counts; country lowercase/blank; device trim-needed; full-row duplicate count).
 - A brief **2–4 sentence note** summarizing observations about the raw data (e.g., two timestamp formats, port commas, casing drift, presence of duplicates).
 
-### Constraints
-- Do **not** clean, transform, replace, or drop any values in this section.
-- Do **not** convert data types (keep raw strings) beyond what’s required to produce counts.
+
+### Part B — Section 2: Identify Data Problems
+
+Identify and describe at least eight distinct data-quality issues present in the raw firewall log dataset. This section focuses on recognizing patterns of inconsistency, incompleteness, and formatting drift before any cleaning is performed.
+
+1. **Review the profiling results from Section 1**  
+- Use the outputs from your initial inspection (shape, samples, missing-value counts, diagnostic tallies) to determine which fields contain inconsistencies or formatting problems.
+
+2. **Identify issues across multiple columns**  
+   Look for common data problems such as:
+   - **Timestamp inconsistencies**, including the two different time formats and any blank or future timestamps.
+   - **Invalid IPv4 values**, such as octets outside the range 0–255 or placeholder values like `-`.
+   - **Ports with commas, blanks, or invalid ranges**, including destination ports greater than 65535.
+   - **Casing drift in `protocol` and `action`**, where the same category appears in different letter-case variations.
+   - **Bytes fields containing commas, SI `k` units, blanks, or negative values**, indicating inconsistent data entry or formatting.
+   - **Lowercase or blank country codes**, and occasional full country names.
+   - **Device identifiers with leading or trailing spaces**, indicating formatting inconsistencies.
+   - **Duplicate rows**, which should be identified before cleaning.
+
+3. **Document each issue clearly**
+   - Provide **at least eight** distinct issues.  
+   - For each issue, include:
+     - A **brief description** of the problem.  
+     - At least **one example value** taken directly from your dataset (from your head/sample/random sample output).  
+     - A short note explaining **why this issue matters** for data quality or analysis.
+
+### Task 2 — Deliverables (include in your report)
+- A **list of at least eight identified data problems**, each with a description and example(s) from your dataset.  Add this as a table in your report. 
 
 
+## Part B — Section 3: Clean & Standardize the Data
 
+### Objective
+Transform the raw firewall log into a consistent, analysis‑ready dataset by applying clearly defined cleaning rules to each column. All cleaning actions should be deterministic, documented, and reproducible.
 
+### General Requirements
+- Apply cleaning **column by column** using the rules below.
+- When a value cannot be cleaned to a valid representation, set it to a **missing value** (`NaN` for non‑datetime; `NaT` for datetime).
+- **Do not drop rows** in this section, except when removing **full‑row duplicates** (see *Duplicates*).
+- Keep a brief **log of assumptions** and **choices** you make (e.g., how you handle future timestamps).
+- Ensure the final DataFrame’s columns retain their original names and order.
 
-### 2. Identify Data Problems (find at least 8)
+---
 
+### 3.1 `event_time`
+**Goal:** A single, consistent timezone (UTC) with valid datetimes.
 
-Look for issues such as:
-- Mixed timestamp formats (3 simple formats)
-- A few blank or future timestamps  
-- Invalid IPv4 addresses (octets out of range)  
-- Ports stored with commas or out of valid range  
-- `protocol` values with casing differences (`tcp`, `Udp`)  
-- `action` variations (`Allow`, `DENIED`)  
-- `bytes_in` / `bytes_out` containing commas or `k` units  
-- Lowercase or blank country codes  
-- Devices with leading/trailing spaces  
-- ~1% duplicate rows  
+**Rules**
+1. Parse timestamps from the **two allowed formats** only:  
+   - `YYYY-MM-DD HH:MM`  
+   - `DD/MM/YYYY HH:MM`
+2. Convert all successfully parsed timestamps to **UTC** (assume the raw values are naive; localize to UTC directly).
+3. Set unparseable or blank timestamps to **`NaT`**.
+4. **Future timestamps:** choose **one** policy and apply consistently:
+   - **Option A (recommended for simplicity):** keep them as valid UTC datetimes.
+   - **Option B:** set future timestamps to `NaT`.
+   - **Option C:** drop rows with future timestamps (not recommended here; if chosen, document clearly and perform drops at the end of this section).
 
-List the issues you find in your report.
+> **Deliverable note:** State which option you used for future timestamps.
+
+---
+
+### 3.2 `src_ip` / `dst_ip`
+**Goal:** Valid IPv4 addresses or missing.
+
+**Rules**
+1. Strip whitespace.
+2. Validate IPv4 format: four dot‑separated octets; each octet is an integer **0–255**.
+3. Replace invalid values (including placeholders like `-`) with **`NaN`**.
+4. Leave private ranges (e.g., `10.x.x.x`, `192.168.x.x`, `172.16–31.x.x`) as they are—these are valid.
+
+---
+
+### 3.3 `src_port` / `dst_port`
+**Goal:** Numeric ports within the valid range.
+
+**Rules**
+1. Remove commas (e.g., `1,234` → `1234`).
+2. Coerce to numeric (non‑numeric becomes `NaN`).
+3. Keep only values in **0–65535**; out‑of‑range values → **`NaN`**.
+4. Preserve as numeric type after cleaning.
+
+---
+
+### 3.4 `protocol`
+**Goal:** Consistent, constrained categories.
+
+**Rules**
+1. Trim whitespace and convert to uppercase.
+2. Keep only the set `{TCP, UDP, ICMP, GRE, ESP}`.
+3. Values outside this set → **`NaN`**.
+
+---
+
+### 3.5 `action`
+**Goal:** Canonical action labels.
+
+**Rules**
+1. Trim whitespace.
+2. Normalize variants by mapping:
+   - `ALLOWED` → `ALLOW`
+   - `DENIED` → `DENY`
+3. Convert to uppercase.
+4. Keep only `{ALLOW, DENY}`; anything else → **`NaN`**.
+
+---
+
+### 3.6 `bytes_in` / `bytes_out`
+**Goal:** Non‑negative numeric bytes.
+
+**Rules**
+1. Remove commas (e.g., `1,234` → `1234`).
+2. Convert **SI `k` units** to numbers by multiplying by **1000** (e.g., `5k` → `5000`, `0.5k` → `500`).
+3. Coerce to numeric (`NaN` for blanks or unparseable).
+4. **Clip negatives to 0** (retain zeros as valid).
+5. Store as numeric type after cleaning.
+
+> **Scope note:** No MB/GB or binary (Ki/Mi) units are present or required.
+
+---
+
+### 3.7 `country`
+**Goal:** Uppercased, trimmed values with blanks as missing.
+
+**Rules**
+1. Trim whitespace.
+2. Convert to **uppercase** (e.g., `us` → `US`, `United States` → `UNITED STATES`).
+3. Replace blank values with **`NaN`**.
+4. You are **not required** to map full names to ISO codes.
+
+---
+
+### 3.8 `device`
+**Goal:** Remove formatting artifacts.
+
+**Rules**
+1. Trim leading and trailing whitespace.
+2. Leave device identifiers as simple strings after trimming.
+
+---
+
+### 3.9 Duplicates
+**Goal:** Remove exact duplicate records.
+
+**Rules**
+1. Identify **full‑row duplicates** (all columns identical).
 
 
 ### 3. Clean & Standardize the Data
