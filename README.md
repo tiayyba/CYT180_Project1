@@ -76,6 +76,7 @@ Upload a **screenshot** that shows:
 
 In this part of the project, you will work with a synthetic firewall log dataset that intentionally contains realistic data quality issues. Your task is to inspect, clean, and standardize the data so it can be reliably used for security analysis. You will identify inconsistencies, correct formatting problems, validate your cleaned dataset, and create one small visualization based on the final results. The focus of Part B is practical data-cleaning skills using Python and pandas.
 
+----
 
 ### Part B — Section 1: Load & Profile the Dataset
 
