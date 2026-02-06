@@ -14,6 +14,7 @@ The dataset intentionally contains several common real‑world issues, including
 - A small number of duplicate rows
 
 You will use Python and pandas to identify these issues, clean the data, standardize all fields, and validate that the cleaned dataset is ready for analysis.
+You may complete the project in Jupyter Notebook or Google Colab.
 
 You will complete two components:
 1. **Part A (5%)** — DataCamp Chapter 1: *Common Data Problems*  
@@ -31,12 +32,12 @@ You will work with a synthetic but realistic firewall log dataset:
 
 | Column        | Description | Notes on Intentional Messiness |
 |---------------|-------------|--------------------------------|
-| **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank or future timestamps |
+| **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank
 | **src_ip**     | Source IPv4 address | Some invalid IPv4 values (out-of-range octets or `-`) |
-| **dst_ip**     | Destination IPv4 address | Mix of public/private ranges; some invalid IPv4 values |
-| **src_port**   | Source port number | Contains commas, blanks, or valid numeric values |
-| **dst_port**   | Destination port number | Contains commas, blanks, and some out-of-range values (>65535) |
-| **protocol**   | Network protocol | Casing drift (e.g., `tcp`, `Udp`, `Esp`, `ICMP`) |
+| **dst_ip**     | Destination IPv4 address | Same issues as source IP |
+| **src_port**   | Source port number | Contains commas, blanks, or valid numeric values, or missing entirely |
+| **dst_port**   | Destination port number | Contains commas, blanks/missing values, and some out-of-range values (>65535) |
+| **protocol**   | Network protocol | Case-drift (e.g., `tcp`, `Udp`, `Esp`, `ICMP`) |
 | **action**     | Firewall action taken | Variants such as `Allow`, ` deny `, `DENIED`, `ALLOWED` |
 | **bytes_in**   | Bytes received | Commas (`1,234`), SI `k` units (`5k`, `0.5k`), blanks, a few negative values |
 | **bytes_out**  | Bytes sent | Same issues as `bytes_in` |
@@ -85,23 +86,24 @@ Profile the raw firewall log file to understand its structure, data quality sign
 1. **Load (initial inspection)**
    - Load the CSV into a DataFrame, confirm the file contains **11 columns** with the expected **column names** (order as listed above).
 
-3. **Report shape**
+2. **Report shape**
    - Display the **number of rows** and **columns** (rows × columns).
    - Note that a small number of **duplicate rows** are present by design.
 
-4. **Inspect structure and examples**
-   - Show a **random sample of 10 rows**.
+3. **Inspect structure and examples**
+   - Show a **random sample of 10 rows**. Use df.sample(10) before any cleaning.
    - Ensure examples visibly demonstrate formatting drift (e.g., two timestamp formats, casing differences, commas, blanks).
 
-5. **List raw data types**
-   - Display the **current dtypes** (expected to be string/object at this stage).
+4. **List raw data types**
+   - Display the **current dtypes**. You may show either `df.dtypes` or `df.info()`.
 
-6. **Profile missingness (raw view)**
+5. **Profile missingness (raw view)**
    - Treat **empty strings** and **whitespace-only strings** as missing **for profiling purposes only**.
-   - Report **missing-value counts per column** in **descending** order.
+   - Do not modify the DataFrame yet — only count them as missing in your output.
+   - Sort the missing-value counts in descending 
    - Do **not** impute, drop, or transform values in this section.
 
-7. **Section 1 — Deliverables**
+6. **Section 1 — Deliverables**
    - **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
    - **Screenshot 2:** **random sample(10)** demonstrating raw variety.
    - **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
@@ -111,11 +113,15 @@ Profile the raw firewall log file to understand its structure, data quality sign
 
 ### Part B — Section 2: Identify Data Problems
 
-Identify and describe at least eight distinct data-quality issues present in the raw firewall log dataset. This section focuses on recognizing patterns of inconsistency, incompleteness, and formatting drift before any cleaning is performed.
-
+Before cleaning the dataset, you must identify the data-quality issues that appear in the raw firewall logs. This section focuses only on recognizing problems, not fixing them.
 1. **Review the profiling results from Section 1**  
-   - Use the outputs from your initial inspection (shape, samples, missing-value counts) to determine which fields contain inconsistencies or formatting problems.
-
+   - Use the outputs you generated earlier—such as:
+      - the dataset sample,
+      - missing-value counts,
+      - raw dtypes,
+      - and any unusual values you noticed—
+   to guide your observations about what is wrong with the data.
+     
 2. **Identify issues across multiple columns:**
    
     Look for common data problems such as:
@@ -275,19 +281,6 @@ Examples:
 Include the plot in your report.
 
   
-**Quick snapshot from the summary:**
-- `rows`: 2000  
-- `future_times`: 16  
-- `null_times`: 20  
-- `src_ip_invalid_examples`: 244 (light signals—many are simple invalid octets)  
-- `dst_ip_invalid_examples`: 101  
-- `src_port_commas`: 24, `dst_port_commas`: 22  
-- `bytes_in_commas`: 63, `bytes_out_commas`: 46  
-- `bytes_in_units_k`: 33, `bytes_out_units_k`: 32  
-- `country_blank`: 43, `country_lower`: 114  
-- `protocol_case_var`: 1622 (mostly casing drift), `action_variants`: 949 (Allow/Deny/ALLOWED/DENIED)  
-- `duplicates_injected`: 20 (~1%)
-
 ---
 
 ## SUBMISSION DETAILS
