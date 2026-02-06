@@ -113,7 +113,7 @@ Profile the raw firewall log file to understand its structure, data quality sign
    - State that **no cleaning** is performed in this section.
    - Confirm that **all columns were treated as strings** for inspection and that **empty/whitespace cells** were considered missing only for profiling.
 
-#### Task1 — Deliverables (include in your report)
+#### Section 1 — Deliverables (include in your report)
 - **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
 - **Screenshot 2:** **random sample(10)** demonstrating raw variety.
 - **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
