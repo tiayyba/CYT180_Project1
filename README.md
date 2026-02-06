@@ -83,7 +83,7 @@ In this part of the project, you will work with a synthetic firewall log dataset
 Profile the raw firewall log file to understand its structure, data quality signals, and initial issues **before** any cleaning.
 
 1. **Load (initial inspection)**
-- Load the CSV into a DataFrame, confirm the file contains **11 columns** with the expected **column names** (order as listed above).
+   - Load the CSV into a DataFrame, confirm the file contains **11 columns** with the expected **column names** (order as listed above).
 
 3. **Report shape**
    - Display the **number of rows** and **columns** (rows × columns).
