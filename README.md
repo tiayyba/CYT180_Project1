@@ -116,8 +116,9 @@ Identify and describe at least eight distinct data-quality issues present in the
 1. **Review the profiling results from Section 1**  
    - Use the outputs from your initial inspection (shape, samples, missing-value counts) to determine which fields contain inconsistencies or formatting problems.
 
-2. **Identify issues across multiple columns: ** Look for common data problems such as:
-   - **Timestamp inconsistencies**, including the two different time formats and any blank or future timestamps.
+2. **Identify issues across multiple columns:**
+    Look for common data problems such as:
+   - **Timestamp inconsistencies** including the two different time formats and any blank or future timestamps.
       - **EXample** Mixed timestamp formats. "2025-04-12 09:30" vs "12/04/2025 09:30". Why it matters: timestamps must be parsed consistently for sorting or plotting.
    - **Invalid IPv4 values**, such as octets outside the range 0–255 or placeholder values like `-`.
    - **Ports with commas, blanks, or invalid ranges**, including destination ports greater than 65535.
@@ -127,7 +128,7 @@ Identify and describe at least eight distinct data-quality issues present in the
    - **Device identifiers with leading or trailing spaces**, indicating formatting inconsistencies.
    - **Duplicate rows**, which should be identified before cleaning.
 
-3. **Document each issue clearly**
+4. **Document each issue clearly**
    - Provide **at least eight** distinct issues.  
    - For each issue, include:
      - A **brief description** of the problem.  
