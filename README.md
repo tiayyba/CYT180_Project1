@@ -1,17 +1,19 @@
 # CYT180 — Project 1: Cleaning Real-World Firewall Logs (15%)
 
 ## Overview
-In cybersecurity analytics, raw log data is often messy, inconsistent, and difficult to analyze.  
-Your goal in this project is to clean a realistic firewall log dataset so it can be used for security analysis and machine learning tasks.
+In cybersecurity analytics, raw log data is often messy, inconsistent, and difficult to analyze.
+Your goal in this project is to clean a realistic firewall log dataset so it can be used for security monitoring and analysis.
+The dataset intentionally contains several common real‑world issues, including:
 
-The dataset contains intentional issues such as:
-- Mixed timestamp formats  
-- Invalid or malformed IP addresses  
-- Ports outside valid ranges  
-- Category inconsistencies in `protocol` and `action`  
-- Byte fields stored as strings, units, or negative values  
-- Missing values  
-- Duplicate rows  
+- Mixed timestamp formats (two formats)
+- Invalid or malformed IPv4 addresses
+- Ports containing commas, blanks, or out‑of‑range values
+- Inconsistent casing in protocol and action
+- Byte fields with commas, k units, blanks, or a few negative values
+- Missing values in several columns
+- A small number of duplicate rows
+
+You will use Python and pandas to identify these issues, clean the data, standardize all fields, and validate that the cleaned dataset is ready for analysis.
 
 You will complete two components:
 1. **Part A (5%)** — DataCamp Chapter 1: *Common Data Problems*  
@@ -24,23 +26,28 @@ You will complete two components:
 You will work with a synthetic but realistic firewall log dataset:
 
 **File:** `raw_firewall_logs.csv`  
-**Rows:** ~2000  
+**Rows:** ~1,010 (including 10 duplicate rows)  
 **Format:** CSV (comma‑separated)
 
 ### Columns
 The dataset contains the following fields:
 
-- **event_time** — Timestamp of the firewall event  
-- **src_ip** — Source IP address  
-- **dst_ip** — Destination IP address  
-- **src_port** — Source port number  
-- **dst_port** — Destination port number  
-- **protocol** — Network protocol (e.g., TCP, UDP, ICMP)  
-- **action** — Firewall decision (e.g., ALLOW, DENY)  
-- **bytes_in** — Bytes received by the firewall  
-- **bytes_out** — Bytes sent out by the firewall  
-- **country** — Country associated with the source IP  
-- **device** — Firewall or gateway device that logged the event
+### Dataset Columns in `raw_firewall_logs.csv`
+
+| Column        | Description | Notes on Intentional Messiness |
+|---------------|-------------|--------------------------------|
+| **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank or future timestamps |
+| **src_ip**     | Source IPv4 address | Some invalid IPv4 values (out-of-range octets or `-`) |
+| **dst_ip**     | Destination IPv4 address | Mix of public/private ranges; some invalid IPv4 values |
+| **src_port**   | Source port number | Contains commas, blanks, or valid numeric values |
+| **dst_port**   | Destination port number | Contains commas, blanks, and some out-of-range values (>65535) |
+| **protocol**   | Network protocol | Casing drift (e.g., `tcp`, `Udp`, `Esp`, `ICMP`) |
+| **action**     | Firewall action taken | Variants such as `Allow`, ` deny `, `DENIED`, `ALLOWED` |
+| **bytes_in**   | Bytes received | Commas (`1,234`), SI `k` units (`5k`, `0.5k`), blanks, a few negative values |
+| **bytes_out**  | Bytes sent | Same issues as `bytes_in` |
+| **country**    | Country associated with source IP | Lowercase values, blanks, and a few full country names |
+| **device**     | Logging device identifier | Some values contain leading/trailing spaces |
+
 
 ### Important Notes
 The dataset intentionally contains:
