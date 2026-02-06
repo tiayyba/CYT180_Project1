@@ -128,15 +128,10 @@ List the issues you find in your report.
 - Convert to numeric  
 - Keep only values in **0–65535**; invalid → NaN  
 
-**src_port / dst_port**
-- Convert to numeric
-- Enforce valid range **0–65535**
-- Remove commas; coerce invalid to NaN
-
-**protocol**
+### **protocol**
 - Normalize casing to one of: `TCP`, `UDP`, `ICMP`, `GRE`, `ESP`
 
-**action**
+### **action**
 - Map small variants to:
   - `ALLOW`
   - `DENY`
