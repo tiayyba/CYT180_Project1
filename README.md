@@ -119,7 +119,7 @@ Identify and describe at least eight distinct data-quality issues present in the
 2. **Identify issues across multiple columns:**
    
     Look for common data problems such as:
-   - **Timestamp inconsistencies** including the two different time formats and any blank or future timestamps. For example, the issue is `Mixed timestamp formats` showing the avlues "2025-04-12 09:30" vs "12/04/2025 09:30". Why it matters: timestamps must be parsed consistently for sorting or plotting.
+   - **Timestamp inconsistencies** including the two different time formats and any blank or future timestamps. For example, the issue is `Mixed timestamp formats` showing the values "2025-04-12 09:30" vs "12/04/2025 09:30". Why it matters: timestamps must be parsed consistently for sorting or plotting.
    - **Invalid IPv4 values**, such as octets outside the range 0–255 or placeholder values like `-`.
    - **Ports with commas, blanks, or invalid ranges**, including destination ports greater than 65535.
    - **Casing drift in `protocol` and `action`**, where the same category appears in different letter-case variations.
@@ -128,16 +128,17 @@ Identify and describe at least eight distinct data-quality issues present in the
    - **Device identifiers with leading or trailing spaces**, indicating formatting inconsistencies.
    - **Duplicate rows**, which should be identified before cleaning.
 
-4. **Document each issue clearly**
+3. **Document each issue clearly**
    - Provide **at least eight** distinct issues.  
    - For each issue, include:
      - A **brief description** of the problem.  
      - At least **one example value** taken directly from your dataset (from your head/sample/random sample output).  
      - A short note explaining **why this issue matters** for data quality or analysis.
 
-### Task 2 — Deliverables (include in your report)
-- A **list of at least eight identified data problems**, each with a description and example(s) from your dataset.  Add this as a table in your report. 
+4. **Deliverables (include in your report)**
+   - A **list of at least eight identified data problems**, each with a description and example(s) from your dataset.  Add this as a table in your report. 
 
+----
 
 ## Part B — Section 3: Clean & Standardize the Data
 
