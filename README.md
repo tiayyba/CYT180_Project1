@@ -142,7 +142,6 @@ Identify and describe at least eight distinct data-quality issues present in the
 
 ## Part B — Section 3: Clean & Standardize the Data
 
-### Objective
 Transform the raw firewall log into a consistent, analysis‑ready dataset by applying clearly defined cleaning rules to each column. All cleaning actions should be deterministic, documented, and reproducible.
 
 ### General Requirements
