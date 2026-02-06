@@ -119,7 +119,7 @@ Identify and describe at least eight distinct data-quality issues present in the
 2. **Identify issues across multiple columns:**
    
     Look for common data problems such as:
-   - **Timestamp inconsistencies** including the two different time formats and any blank or future timestamps. For example, the issue is **Mixed timestamp formats** showing the avlues "2025-04-12 09:30" vs "12/04/2025 09:30". Why it matters: timestamps must be parsed consistently for sorting or plotting.
+   - **Timestamp inconsistencies** including the two different time formats and any blank or future timestamps. For example, the issue is `Mixed timestamp formats` showing the avlues "2025-04-12 09:30" vs "12/04/2025 09:30". Why it matters: timestamps must be parsed consistently for sorting or plotting.
    - **Invalid IPv4 values**, such as octets outside the range 0–255 or placeholder values like `-`.
    - **Ports with commas, blanks, or invalid ranges**, including destination ports greater than 65535.
    - **Casing drift in `protocol` and `action`**, where the same category appears in different letter-case variations.
