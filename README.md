@@ -84,7 +84,7 @@ Upload a **screenshot** that shows:
 
 ## Part B — Data Cleansing
 
-Work on `raw_firewall_logs_light.csv` using Python and pandas.
+Work on `raw_firewall_logs.csv` using Python and pandas.
 
 ### 1. Load & profile
 
@@ -121,7 +121,10 @@ List the issues you find in your report.
 - Convert to a standard datetime format (UTC not required, consistency is required)  
 - Handle blanks or impossible future dates  
 
-
+### **src_ip / dst_ip**
+- Validate IPv4 format  
+- Replace invalid IPs (e.g., out-of-range octets) with NaN
+  
 ### **src_port / dst_port**
 - Remove commas  
 - Convert to numeric  
@@ -246,6 +249,6 @@ A short written summary (2 pages) that includes:
 ### Academic Integrity
 - The work you submit must be your own.
 - You may discuss ideas with classmates, but you must write your own code and explanations.
-- All screenshots must show the current date time, usnique username
+- All screenshots must show the current date time, unique username
 - Submissions may be checked for similarity.
 
