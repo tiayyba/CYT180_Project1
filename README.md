@@ -101,20 +101,10 @@ Profile the raw firewall log file to understand its structure, data quality sign
    - Report **missing-value counts per column** in **descending** order.
    - Do **not** impute, drop, or transform values in this section.
 
-7. **Light diagnostic signals (counts only; no cleaning yet)**
-   - **Timestamps:** counts for each of the two expected formats  
-     (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`), plus **blank count**.
-   - **Ports:** counts with **commas** and **blank values** for `src_port` and `dst_port`.
-   - **Bytes:** counts with **commas**, counts with **`k` units**, counts of **negatives** (string-level detection), and **blanks** for `bytes_in` and `bytes_out`.
-   - **Protocol / Action:** **unique raw value** counts (to reveal casing drift/variants).
-   - **Country / Device:** counts of **lowercase country codes**, **blank country values**, and **device values needing trimming** (leading/trailing spaces).
-   - **Duplicates:** count of **full-row duplicates** (do not drop yet).
-
-8. **Section 1 — Deliverables**
+7. **Section 1 — Deliverables**
    - **Screenshot 1:** Dataset **shape** and **column names** (verifying 11 expected columns).
    - **Screenshot 2:** **random sample(10)** demonstrating raw variety.
    - **Screenshot 3:** **Missing-value counts per column** (including blanks/whitespace).
-   - **Screenshot 4:** **Diagnostic counts** (timestamp format tallies; ports with commas/blanks; bytes with commas/`k`/negatives/blanks; protocol/action unique counts; country lowercase/blank; device trim-needed; full-row duplicate count).
    - A brief **2–4 sentence note** summarizing observations about the raw data (e.g., two timestamp formats, port commas, casing drift, presence of duplicates).
 
 ----
@@ -129,6 +119,9 @@ Identify and describe at least eight distinct data-quality issues present in the
 2. **Identify issues across multiple columns**  
    Look for common data problems such as:
    - **Timestamp inconsistencies**, including the two different time formats and any blank or future timestamps.
+      - **EXample**
+         - Issue: Mixed timestamp formats. "2025-04-12 09:30" vs "12/04/2025 09:30"
+         -  Why it matters: timestamps must be parsed consistently for sorting or plotting.
    - **Invalid IPv4 values**, such as octets outside the range 0–255 or placeholder values like `-`.
    - **Ports with commas, blanks, or invalid ranges**, including destination ports greater than 65535.
    - **Casing drift in `protocol` and `action`**, where the same category appears in different letter-case variations.
