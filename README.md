@@ -29,11 +29,6 @@ You will work with a synthetic but realistic firewall log dataset:
 **Rows:** ~1,010 (including 10 duplicate rows)  
 **Format:** CSV (comma‑separated)
 
-### Columns
-The dataset contains the following fields:
-
-### Dataset Columns in `raw_firewall_logs.csv`
-
 | Column        | Description | Notes on Intentional Messiness |
 |---------------|-------------|--------------------------------|
 | **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank or future timestamps |
