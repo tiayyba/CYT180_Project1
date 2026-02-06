@@ -114,14 +114,11 @@ Profile the raw firewall log file to understand its structure, data quality sign
 Identify and describe at least eight distinct data-quality issues present in the raw firewall log dataset. This section focuses on recognizing patterns of inconsistency, incompleteness, and formatting drift before any cleaning is performed.
 
 1. **Review the profiling results from Section 1**  
-- Use the outputs from your initial inspection (shape, samples, missing-value counts, diagnostic tallies) to determine which fields contain inconsistencies or formatting problems.
+   - Use the outputs from your initial inspection (shape, samples, missing-value counts) to determine which fields contain inconsistencies or formatting problems.
 
-2. **Identify issues across multiple columns**  
-   Look for common data problems such as:
+2. **Identify issues across multiple columns: ** Look for common data problems such as:
    - **Timestamp inconsistencies**, including the two different time formats and any blank or future timestamps.
-      - **EXample**
-         - Issue: Mixed timestamp formats. "2025-04-12 09:30" vs "12/04/2025 09:30"
-         -  Why it matters: timestamps must be parsed consistently for sorting or plotting.
+      - **EXample** Mixed timestamp formats. "2025-04-12 09:30" vs "12/04/2025 09:30". Why it matters: timestamps must be parsed consistently for sorting or plotting.
    - **Invalid IPv4 values**, such as octets outside the range 0–255 or placeholder values like `-`.
    - **Ports with commas, blanks, or invalid ranges**, including destination ports greater than 65535.
    - **Casing drift in `protocol` and `action`**, where the same category appears in different letter-case variations.
