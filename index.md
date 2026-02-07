@@ -39,6 +39,7 @@ You will work with a synthetic but realistic firewall log dataset:
 **Rows:** ~1,010 (including 10 duplicate rows)  
 **Format:** CSV (comma‑separated)
 
+
 | Column        | Description | Notes on Intentional Messiness |
 |---------------|-------------|--------------------------------|
 | **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank
@@ -52,6 +53,7 @@ You will work with a synthetic but realistic firewall log dataset:
 | **bytes_out**  | Bytes sent | Same issues as `bytes_in` |
 | **country**    | Country associated with source IP | Lowercase values, blanks, and a few full country names |
 | **device**     | Logging device identifier | Some values contain leading/trailing spaces |
+
 
 
 ----
