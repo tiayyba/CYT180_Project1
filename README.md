@@ -264,7 +264,7 @@ Your cleaning steps must be deterministic, documented, and reproducible.
 
 ---
 
-### 3.9 Duplicates
+### 3.9 `Duplicates`
 **Goal:** Remove full-row duplicates.
 
 **Rules**
@@ -274,7 +274,7 @@ Your cleaning steps must be deterministic, documented, and reproducible.
 
 ---
 
-### 3.10  Validation Checks
+### 3.10  `Validation Checks`
 Provide **at least 3** validation steps, such as:
 - All timestamps successfully parsed  
 - No ports outside 0–65535  
@@ -282,7 +282,7 @@ Provide **at least 3** validation steps, such as:
 - No negative or non-numeric byte values  
 - Duplicate rows removed
 
-### 3.11 Simple Visualization
+### 3.11 `Simple Visualization`
 Create **one** small, security‑oriented plot based on the cleaned dataset. Include the plot in your report.
 
 Examples:
