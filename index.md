@@ -40,8 +40,6 @@ You will work with a synthetic but realistic firewall log dataset:
 **Format:** CSV (comma‑separated)
 
 
-----
-
 | Column        | Description                     | Notes on Intentional Messiness |
 |---------------|---------------------------------|--------------------------------|
 | event_time    | Timestamp of the firewall event | Two formats: YYYY-MM-DD HH:MM, DD/MM/YYYY HH:MM; some blank |
@@ -56,23 +54,6 @@ You will work with a synthetic but realistic firewall log dataset:
 | country       | Country associated with source IP | Lowercase values, blanks, and a few full country names |
 | device        | Logging device identifier      | Some values contain leading or trailing spaces |
 
-
-----
-
-
-| Column        | Description                     | Notes on Intentional Messiness |
-|---------------|---------------------------------|--------------------------------|
-| **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank |
-| **src_ip**     | Source IPv4 address            | Some invalid IPv4 values (out-of-range octets or `-`) |
-| **dst_ip**     | Destination IPv4 address       | Same issues as source IP |
-| **src_port**   | Source port number              | Contains commas, blanks, or valid numeric values, or missing entirely |
-| **dst_port**   | Destination port number         | Contains commas, blanks/missing values, and some out-of-range values (>65535) |
-| **protocol**   | Network protocol                | Case-drift (e.g., `tcp`, `Udp`, `Esp`, `ICMP`) |
-| **action**     | Firewall action taken           | Variants such as `Allow`, ` deny `, `DENIED`, `ALLOWED` |
-| **bytes_in**   | Bytes received                  | Commas (`1,234`), SI `k` units (`5k`, `0.5k`), blanks, a few negative values |
-| **bytes_out**  | Bytes sent                      | Same issues as `bytes_in` |
-| **country**    | Country associated with source IP | Lowercase values, blanks, and a few full country names |
-| **device**     | Logging device identifier       | Some values contain leading/trailing spaces |
 
 ----
 
