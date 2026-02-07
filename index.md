@@ -42,7 +42,7 @@ You will work with a synthetic but realistic firewall log dataset:
 
 | Column        | Description | Notes on Intentional Messiness |
 |---------------|-------------|--------------------------------|
-| **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank
+| **event_time** | Timestamp of the firewall event | Two formats (`YYYY-MM-DD HH:MM`, `DD/MM/YYYY HH:MM`); some blank |
 | **src_ip**     | Source IPv4 address | Some invalid IPv4 values (out-of-range octets or `-`) |
 | **dst_ip**     | Destination IPv4 address | Same issues as source IP |
 | **src_port**   | Source port number | Contains commas, blanks, or valid numeric values, or missing entirely |
