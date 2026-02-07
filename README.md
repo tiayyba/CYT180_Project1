@@ -326,9 +326,9 @@ Your report must include all deliverables listed in the project:
 - Screenshot showing completion of **Chapter 1: Common Data Problems** (name + timestamp visible)
 
 ### **Part B — Firewall Log Cleaning (10%)**
-- 1. Identifying Data Issues — **2.0 pts**
+1. Identifying Data Issues — **2.0 pts**
   - Correctly identifies **at least 8** issues in the dataset  
-- 2. Cleaning & Standardization — **4.0 pts**
+2. Cleaning & Standardization — **4.0 pts**
   - screenshots included in the report  
     - Parsed timestamps  
     - IP validation  
@@ -337,7 +337,7 @@ Your report must include all deliverables listed in the project:
     - Byte conversions  
     - Country/device cleanup  
     - Duplicate removal  
-- 3. Validation Checks — **1.5 pts**
+3. Validation Checks — **1.5 pts**
   - At least **3 meaningful checks**, such as:
     - Valid range for ports  
     - Valid protocol/action categories  
@@ -345,7 +345,7 @@ Your report must include all deliverables listed in the project:
     - No future timestamps  
     - Duplicates removed  
 
-- 4. Visualization — **1.0 pt**
+4. Visualization — **1.0 pt**
   - One simple, correct plot (e.g., top IPs, allow vs deny, common ports)  
   - Must be generated *after* cleaning  
 
