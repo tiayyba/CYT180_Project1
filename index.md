@@ -1,5 +1,14 @@
 # CYT180 — Project 1: Cleaning Real-World Firewall Logs (15%)
 
+## Learning Objectives
+This project helps you build practical skills for working with real cybersecurity data. Firewall logs are often messy, inconsistent, and difficult to analyze until they are cleaned. By completing this project, you practice the core steps analysts take before any threat detection or monitoring work can begin.
+How This Project Supports CYT180 Learning Objectives: 
+- **Work with real security logs:** learn how raw firewall events look before they are cleaned or used in tools.
+- **Apply Python to cybersecurity tasks:** use pandas to parse timestamps, clean fields, and standardize log formats.
+- **Identify data-quality issues:** spot invalid IPs, malformed ports, inconsistent categories, and missing values.
+- **Prepare data for security analysis:** produce a clean dataset suitable for dashboards, SIEM ingestion, and basic analytics.
+- **Create basic security visualizations:** build a simple plot (e.g., allow vs deny) to interpret log activity.
+
 ## Overview
 In cybersecurity analytics, raw log data is often messy, inconsistent, and difficult to analyze.
 Your goal in this project is to clean a realistic firewall log dataset so it can be used for security monitoring and analysis.
