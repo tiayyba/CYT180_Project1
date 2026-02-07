@@ -159,8 +159,9 @@ Before cleaning the dataset, you must identify the data-quality issues that appe
 
 ## Part B — Section 3: Clean & Standardize the Data
 
-Transform the raw firewall log into a consistent, analysis‑ready dataset by applying clearly defined cleaning rules to each column. All cleaning actions should be deterministic, documented, and reproducible.
-
+In this section, you will clean each column of the firewall dataset to produce a consistent, analysis‑ready DataFrame.
+Apply the rules column by column as described below.
+Your cleaning steps must be deterministic, documented, and reproducible.
 ### General Requirements
 - Apply cleaning **column by column** using the rules below.
 - When a value cannot be cleaned to a valid representation, set it to a **missing value** (`NaN` for non‑datetime; `NaT` for datetime).
@@ -171,51 +172,48 @@ Transform the raw firewall log into a consistent, analysis‑ready dataset by ap
 ---
 
 ### 3.1 `event_time`
-**Goal:** A single, consistent timezone (UTC) with valid datetimes.
+**Goal:** Convert all timestamps to valid UTC datetimes.
 
 **Rules**
-1. Parse timestamps from the **two allowed formats** only:  
+1. Parse timestamps from **only these two formats**:  
    - `YYYY-MM-DD HH:MM`  
    - `DD/MM/YYYY HH:MM`
 2. Convert all successfully parsed timestamps to **UTC** (assume the raw values are naive; localize to UTC directly).
 3. Set unparseable or blank timestamps to **`NaT`**.
-4. **Future timestamps:** choose **one** policy and apply consistently:
-   - **Option A (recommended for simplicity):** keep them as valid UTC datetimes.
-   - **Option B:** set future timestamps to `NaT`.
-   - **Option C:** drop rows with future timestamps (not recommended here; if chosen, document clearly and perform drops at the end of this section).
-
-> **Deliverable note:** State which option you used for future timestamps.
 
 ---
 
 ### 3.2 `src_ip` / `dst_ip`
-**Goal:** Valid IPv4 addresses or missing.
+**Goal:** Valid IPv4 addresses only.
 
 **Rules**
-1. Strip whitespace.
-2. Validate IPv4 format: four dot‑separated octets; each octet is an integer **0–255**.
+1. Strip any leading/trailing whitespace.
+2. Validate IPv4 format:
+   - four dot‑separated octets
+   - each octet is an integer **0–255**.
 3. Replace invalid values (including placeholders like `-`) with **`NaN`**.
 
 ---
 
-### 3.3 `src_port` / `dst_port`
+### 3.3 `src_port` and `dst_port`
 **Goal:** Numeric ports within the valid range.
 
 **Rules**
 1. Remove commas (e.g., `1,234` → `1234`).
 2. Coerce to numeric (non‑numeric becomes `NaN`).
 3. Keep only values in **0–65535**; out‑of‑range values → **`NaN`**.
-4. Preserve as numeric type after cleaning.
+4. Leave ports as numeric data after cleaning.
 
 ---
 
 ### 3.4 `protocol`
-**Goal:** Consistent, constrained categories.
+**Goal:** Standard, uppercase protocol categories.
 
 **Rules**
 1. Trim whitespace and convert to uppercase.
-2. Keep only the set `{TCP, UDP, ICMP, GRE, ESP}`.
-3. Values outside this set → **`NaN`**.
+2. Keep only:
+   - TCP, UDP, ICMP, GRE, ESP
+4. Values outside these categories → **`NaN`**.
 
 ---
 
@@ -237,17 +235,17 @@ Transform the raw firewall log into a consistent, analysis‑ready dataset by ap
 
 **Rules**
 1. Remove commas (e.g., `1,234` → `1234`).
-2. Convert **SI `k` units** to numbers by multiplying by **1000** (e.g., `5k` → `5000`, `0.5k` → `500`).
-3. Coerce to numeric (`NaN` for blanks or unparseable).
-4. **Clip negatives to 0** (retain zeros as valid).
-5. Store as numeric type after cleaning.
-
-> **Scope note:** No MB/GB or binary (Ki/Mi) units are present or required.
+2. Convert values ending in "k" (e.g., "5k", "0.5k") to their numeric value × 1000.
+   - `5k` → `5000`
+   - `0.5k` → `500`
+4. Convert everything to numeric (NaN if unparseable).
+5. Negative values → set to 0.
+6. Leave columns as numeric types
 
 ---
 
 ### 3.7 `country`
-**Goal:** Uppercased, trimmed values with blanks as missing.
+**Goal:** Clean, uppercase country field.
 
 **Rules**
 1. Trim whitespace.
@@ -267,12 +265,16 @@ Transform the raw firewall log into a consistent, analysis‑ready dataset by ap
 ---
 
 ### 3.9 Duplicates
-**Goal:** Remove exact duplicate records.
+**Goal:** Remove full-row duplicates.
 
 **Rules**
-1. Identify **full‑row duplicates** (all columns identical).
+1. Identify duplicate rows based on all columns.
+2. Remove exact duplicates only.
+3. Report how many duplicates were removed.
 
-### 4. Validation Checks
+---
+
+### 3.10  Validation Checks
 Provide **at least 3** validation steps, such as:
 - All timestamps successfully parsed  
 - No ports outside 0–65535  
@@ -280,33 +282,41 @@ Provide **at least 3** validation steps, such as:
 - No negative or non-numeric byte values  
 - Duplicate rows removed
 
-### 5. Simple Visualization
-Create **one** small, security‑oriented plot based on the cleaned dataset.
+### 3.11 Simple Visualization
+Create **one** small, security‑oriented plot based on the cleaned dataset. Include the plot in your report.
 
 Examples:
 - Top 10 source IPs  
 - Count of ALLOW vs DENY  
 - Most common destination ports  
 - Event count per day  
-
-Include the plot in your report.
-
   
 ---
 
 ## SUBMISSION DETAILS
 
-###  `report.pdf`
-A short written summary (2 pages) that includes:
-- The data problems you found  
-- The main cleaning steps you applied  
-- Any assumptions you made  
-- Three or more validation checks
-- Clear screenshots of your pandas code
-- Screenshots of outputs showing the cleaning steps  
-- Screenshot of your visualization  
-- Text explanations of what you did
-- Your plot (embedded or attached)
+You must submit a single PDF file named: `username_project1_report.pdf`
+Your report must include all deliverables listed in the project:
+
+- Part A: Screenshot of DataCamp Chapter 1 completion.
+- Part B — Section 1: screenshots along with 2–4 sentence summary describing key observations about the raw dataset.
+- Part B — Section 2: a table listing at least eight data-quality issues.
+- Part B — Section 3 :Include screenshots showing your cleaning steps for:
+   - Parsed timestamps
+   - IP address validation
+   - Port cleaning
+   - Protocol/action normalization
+   - Byte conversions (k units, commas, negatives)
+   - Country/device cleanup
+   - Duplicate removal (show before/after counts)
+- Part B — Validation Checks
+   - Include at least three validation checks.
+   - Each must include:
+      - A description of what you validated
+      - A supporting screenshot showing the output
+- Part B — Visualization Deliverable
+   - One visualization created from the cleaned dataset
+   - A short 1–2 sentence explanation of what the plot shows
 
 ---
 
@@ -318,8 +328,6 @@ A short written summary (2 pages) that includes:
 ### **Part B — Firewall Log Cleaning (10%)**
 - 1. Identifying Data Issues — **2.0 pts**
   - Correctly identifies **at least 8** issues in the dataset  
-  - Issues align with the light messiness (timestamps, IPs, ports, casing drift, bytes formatting, duplicates, etc.)
-
 - 2. Cleaning & Standardization — **4.0 pts**
   - screenshots included in the report  
     - Parsed timestamps  
@@ -329,7 +337,6 @@ A short written summary (2 pages) that includes:
     - Byte conversions  
     - Country/device cleanup  
     - Duplicate removal  
-
 - 3. Validation Checks — **1.5 pts**
   - At least **3 meaningful checks**, such as:
     - Valid range for ports  
@@ -352,7 +359,9 @@ A short written summary (2 pages) that includes:
 
 ### Academic Integrity
 - The work you submit must be your own.
-- You may discuss ideas with classmates, but you must write your own code and explanations.
-- All screenshots must show the current date time, unique username
-- Submissions may be checked for similarity.
-
+- You may discuss ideas with classmates, but you must write your own code, explanations, and analysis.
+- You may use AI‑based tools for support, but:
+   - Your submission must not be entirely AI‑generated.
+   - You are responsible for understanding, verifying, and being able to explain all work you submit.
+- All screenshots must show the current date/time and your unique username.
+- Submissions may be checked for similarity, AI‑generated patterns, or unusual code structure.
